@@ -387,7 +387,7 @@ const eventsData = [
     {
         "date": "2026-05-04",
         "title": "Turni crono",
-        "circuit": "Misao World Circuit",
+        "circuit": "Misano World Circuit",
         "organizer": "Promoracing"
     },
     {
@@ -711,7 +711,7 @@ const eventsData = [
     {
         "date": "2026-10-19",
         "title": "Turni crono",
-        "circuit": "Missano World Circuit",
+        "circuit": "Misano World Circuit",
         "organizer": "Rossocorsa"
     },
 ];
