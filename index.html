@@ -4,64 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trackly - Calendario Eventi</title>
-    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Trackly</h1>
-            <p class="subtitle">Calendario Trackday Moto</p>
-        </header>
-
-        <main>
-            <div class="filters">
-                <div class="multi-select" id="filterCircuitMenu">
-                    <button type="button" class="multi-select-trigger" id="filterCircuitTrigger" aria-expanded="false" aria-controls="filterCircuitOptions">
-                        Tutti i circuiti
-                    </button>
-                    <div class="multi-select-panel" id="filterCircuitOptions" role="group" aria-label="Seleziona circuiti"></div>
-                </div>
-                <div class="multi-select" id="filterOrganizerMenu">
-                    <button type="button" class="multi-select-trigger" id="filterOrganizerTrigger" aria-expanded="false" aria-controls="filterOrganizerOptions">
-                        Tutti gli organizzatori
-                    </button>
-                    <div class="multi-select-panel" id="filterOrganizerOptions" role="group" aria-label="Seleziona organizzatori"></div>
-                </div>
-            </div>
-
-            <div class="controls">
-                <button class="btn btn-prev" id="prevMonth" aria-label="Mese precedente">&#8249;</button>
-                <h2 id="monthYear"></h2>
-                <button class="btn btn-next" id="nextMonth" aria-label="Mese successivo">&#8250;</button>
-            </div>
-
-            <div class="calendar-wrapper">
-                <div class="calendar">
-                    <div class="weekday">Lun</div>
-                    <div class="weekday">Mar</div>
-                    <div class="weekday">Mer</div>
-                    <div class="weekday">Gio</div>
-                    <div class="weekday">Ven</div>
-                    <div class="weekday">Sab</div>
-                    <div class="weekday">Dom</div>
-                    <div id="calendarDays"></div>
-                </div>
-            </div>
-
-            <div class="events-section">
-                <h3 id="eventsTitle">Eventi</h3>
-                <div id="eventsList" class="events-list">
-                    <p class="no-events">Nessun evento selezionato</p>
-                </div>
-            </div>
-        </main>
-
-        <footer>
-            <p>&copy; 2026 Trackly - Calendario Eventi</p>
-        </footer>
-    </div>
-
-    <script src="events.js"></script>
-    <script src="app.js"></script>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
 </body>
 </html>
