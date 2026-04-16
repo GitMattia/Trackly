@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { supabase } from './lib/supabaseClient.js';
-import { eventsData } from './data/events.js';
+import { fetchEvents } from './lib/events.js';
 import AppHeader from './components/AppHeader.jsx';
 import AuthPage from './components/AuthPage.jsx';
 import ProfilePage from './components/ProfilePage.jsx';
@@ -47,6 +47,7 @@ function App() {
         organizers: [],
     });
     const [openMenu, setOpenMenu] = useState(null);
+    const [events, setEvents] = useState([]);
 
     const circuitMenuRef = useRef(null);
     const organizerMenuRef = useRef(null);
@@ -55,20 +56,20 @@ function App() {
     const calendarWrapperRef = useRef(null);
 
     const circuits = useMemo(() => {
-        return [...new Set(eventsData.map((event) => event.circuit))].sort((a, b) => a.localeCompare(b, 'it'));
-    }, []);
+        return [...new Set(events.map((event) => event.circuit))].sort((a, b) => a.localeCompare(b, 'it'));
+    }, [events]);
 
     const organizers = useMemo(() => {
-        return [...new Set(eventsData.map((event) => event.organizer))].sort((a, b) => a.localeCompare(b, 'it'));
-    }, []);
+        return [...new Set(events.map((event) => event.organizer))].sort((a, b) => a.localeCompare(b, 'it'));
+    }, [events]);
 
     const filteredEvents = useMemo(() => {
-        return eventsData.filter((event) => {
+        return events.filter((event) => {
             const circuitMatch = selectedFilters.circuits.length === 0 || selectedFilters.circuits.includes(event.circuit);
             const organizerMatch = selectedFilters.organizers.length === 0 || selectedFilters.organizers.includes(event.organizer);
             return circuitMatch && organizerMatch;
         });
-    }, [selectedFilters]);
+    }, [events, selectedFilters]);
 
     useEffect(() => {
         function handleDocumentClick(event) {
@@ -89,6 +90,26 @@ function App() {
         return () => {
             document.removeEventListener('click', handleDocumentClick);
         };
+    }, []);
+
+    useEffect(() => {
+        async function loadEvents() {
+            try {
+                const { data, error } = await fetchEvents();
+                if (error || !data) {
+                    console.error('Impossibile caricare gli eventi da Supabase.', error);
+                    setEvents([]);
+                    return;
+                }
+
+                setEvents(data);
+            } catch (error) {
+                console.error('Errore caricamento eventi Supabase', error);
+                setEvents([]);
+            }
+        }
+
+        loadEvents();
     }, []);
 
     function triggerCalendarActionAnimation() {

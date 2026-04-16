@@ -114,7 +114,7 @@ function CalendarPage({
                         const organizerUrl = organizerLinks[event.organizer];
 
                         return (
-                            <div className="event-card" key={`${event.date}-${event.organizer}-${event.title}-${event.circuit}`}>
+                            <div className="event-card" key={event.id || `${event.date}-${event.organizer}-${event.title}-${event.circuit}`}>
                                 <div className="event-date">{formatDateItalian(event.date)}</div>
                                 <div className="event-title">{event.title}</div>
                                 <div className="event-bottom-row">

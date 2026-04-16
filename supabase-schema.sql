@@ -77,3 +77,32 @@ create index if not exists idx_track_days_user_id on track_days(user_id);
 create index if not exists idx_track_days_circuit_id on track_days(circuit_id);
 create index if not exists idx_track_days_bike_id on track_days(bike_id);
 create index if not exists idx_track_days_date on track_days(date);
+
+-- 5. Events: lista eventi per il calendario
+create table if not exists events (
+  id uuid primary key default uuid_generate_v4(),
+  date date not null,
+  title text not null,
+  circuit text not null,
+  organizer text not null,
+  description text,
+  location text,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+create index if not exists idx_events_date on events(date);
+create index if not exists idx_events_circuit on events(circuit);
+create index if not exists idx_events_organizer on events(organizer);
+
+-- 6. User event registrations: eventi a cui un utente si è iscritto
+create table if not exists user_event_registrations (
+  id uuid primary key default uuid_generate_v4(),
+  user_id uuid not null references auth.users(id) on delete cascade,
+  event_id uuid not null references events(id) on delete cascade,
+  status text not null default 'registered',
+  registered_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  unique (user_id, event_id)
+);
+create index if not exists idx_user_event_registrations_user_id on user_event_registrations(user_id);
+create index if not exists idx_user_event_registrations_event_id on user_event_registrations(event_id);
