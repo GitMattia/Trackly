@@ -287,7 +287,7 @@ function App() {
         async function loadProfile() {
             const { data, error } = await supabase
                 .from('profiles')
-                .select('full_name, nickname, country, phone')
+                .select('email, full_name, nickname, country, phone')
                 .eq('id', user.id)
                 .single();
 
@@ -296,7 +296,10 @@ function App() {
                 return;
             }
 
-            const profileData = data || {};
+            const profileData = data || { email: user.email };
+            if (!profileData.email) {
+                profileData.email = user.email;
+            }
             setProfile(profileData);
 
             const nameParts = (profileData.full_name ?? '').trim().split(/\s+/);
